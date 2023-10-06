@@ -19,9 +19,9 @@ class UserController extends Controller
         $this->repositoryInterfaces = $repositoryInterfaces;
     }
 
-    public function index(Request $request)
+    public function index()
     {
-        $table = $request->table;
+        $table = 'users';
         $users = $this->repositoryInterfaces->all($table);
 
         if(!$users)
@@ -42,7 +42,7 @@ class UserController extends Controller
             'password' => 'required'
         ]);
 
-        $table = $request->table;
+        $table = 'users';
         $user = $this->repositoryInterfaces->store($table,$data);
     
         if(!$user)
@@ -51,16 +51,17 @@ class UserController extends Controller
         }
         else
         {
-            return $this->successMessage(myMessage::ADD_USER,$user);
+            return $this->successMessage(myMessage::ADD_USER,'');
         }        
     }
 
     public function destroy(Request $request)
     {
+        $table = 'users';
         $id = $request->id;
-        $user = $this->repositoryInterfaces->destroy($id);
+        $user = $this->repositoryInterfaces->destroy($table,$id);
     
-        if($user)
+        if(!$user)
         {
             return $this->errorMessage(myMessage::DELETE_USER_ERROR);
         }
@@ -72,8 +73,9 @@ class UserController extends Controller
 
     public function getUser(Request $request)
     {
+        $table = 'users';
         $id = $request->id;
-        $user = $this->repositoryInterfaces->getUser($id);
+        $user = $this->repositoryInterfaces->getUser($table,$id);
     
         if(!$user)
         {
@@ -87,8 +89,9 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        $table = 'users';
         $id = $request->id;
-        $user = $this->repositoryInterfaces->update($request,$id);
+        $user = $this->repositoryInterfaces->update($table,$request,$id);
     
         if(!$user)
         {
@@ -96,7 +99,7 @@ class UserController extends Controller
         }
         else
         {
-            return $this->successMessage(myMessage::UPDATE_USER,$user);
+            return $this->successMessage(myMessage::UPDATE_USER,'');
         }        
     }
 }

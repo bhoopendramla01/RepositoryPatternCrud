@@ -7,9 +7,9 @@ interface RepositoryInterfaces{
 
     public function store($table,$data);
 
-    public function destroy($id);
+    public function destroy($table,$id);
 
-    public function getUser($id);
+    public function getUser($table,$id);
 
-    public function update($data, $id);
+    public function update($table,$data, $id);
 }

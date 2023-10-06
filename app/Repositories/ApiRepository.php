@@ -16,52 +16,21 @@ class ApiRepository implements RepositoryInterfaces
 
     public function store($table,$data)
     {
-        // $user = User::create($data);
-
-        $user = DB::table($table)->insert($data);
-
-        if (!empty($user)) {
-            return $user;
-        } else {
-            return [];
-        }
+        return DB::table($table)->insert($data);
     }
 
-    public function destroy($id)
+    public function destroy($table,$id)
     {
-        $user = User::find($id);
-        User::destroy($id);
-
-        if(!$user)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+       return DB::table($table)->where('id', $id)->delete();
     }
 
-    public function getUser($id)
+    public function getUser($table,$id)
     {
-        $user = User::find($id);
-
-        if (!empty($user)) {
-            return $user;
-        } else {
-            return [];
-        }
+        return DB::table($table)->where('id', $id)->get();
     }
 
-    public function update($data, $id)
+    public function update($table,$data, $id)
     {
-        $user = User::find($id);
-        $status = $user->update($data->all());
-
-        if ($user == true) {
-            return $user;
-        } else {
-            return [];
-        }
+        return DB::table($table)->where('id', $id)->update($data->all());
     }
 }
