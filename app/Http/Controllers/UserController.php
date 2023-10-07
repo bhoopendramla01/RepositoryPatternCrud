@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Repositories\Interfaces\RepositoryInterfaces;
-use myConstant;
 use myMessage;
-use Auth;
+// use Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Traits\MessageTrait;
 
@@ -102,4 +101,33 @@ class UserController extends Controller
             return $this->successMessage(myMessage::UPDATE_USER,'');
         }        
     }
+
+    public function login(Request $request)
+    {
+        $status = $request->validate([
+            'email' => 'required|regex:/^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/',
+            'password' => 'required'
+        ]);
+
+        if(!$token = auth()->attempt($status))
+        {
+            return $this->errorMessage(myMessage::NOT_AUTH_USER);
+        }
+
+        return $this->responseWithToken($token);
+    }
+
+    protected function responseWithToken($token)
+    {
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer'
+        ]);
+    }
+
+    public function profile()
+    {
+        return response()->json(auth()->user());
+    }
+
 }

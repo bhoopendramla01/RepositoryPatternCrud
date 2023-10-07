@@ -17,5 +17,9 @@ class myMessage{
 
     const UPDATE_USER_ERROR = 'User Not Updated';
 
+    const NOT_AUTH_USER = 'User is not Authenticated.';
+
+    const SEND_MAIL = 'Email send successfully';
+
 
 }

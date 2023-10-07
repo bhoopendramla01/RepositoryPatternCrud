@@ -3,8 +3,7 @@
 namespace App\Repositories;
 
 use App\Repositories\Interfaces\RepositoryInterfaces;
-use App\Models\User;
-use GuzzleHttp\Psr7\Request;
+// use illuminate\Support\Facades\DB;
 use DB;
 
 class ApiRepository implements RepositoryInterfaces
@@ -14,22 +13,22 @@ class ApiRepository implements RepositoryInterfaces
         return DB::table($table)->get();
     }
 
-    public function store($table,$data)
+    public function store($table, $data)
     {
         return DB::table($table)->insert($data);
     }
 
-    public function destroy($table,$id)
+    public function destroy($table, $id)
     {
-       return DB::table($table)->where('id', $id)->delete();
+        return DB::table($table)->where('id', $id)->delete();
     }
 
-    public function getUser($table,$id)
+    public function getUser($table, $id)
     {
         return DB::table($table)->where('id', $id)->get();
     }
 
-    public function update($table,$data, $id)
+    public function update($table, $data, $id)
     {
         return DB::table($table)->where('id', $id)->update($data->all());
     }
